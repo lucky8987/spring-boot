@@ -41,6 +41,7 @@ import org.springframework.boot.logging.LoggerGroups;
 import org.springframework.boot.logging.LoggingSystem;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 
 /**
  * {@link Endpoint @Endpoint} to expose a collection of {@link LoggerConfiguration}s.
@@ -114,7 +115,7 @@ public class LoggersEndpoint {
 	}
 
 	private Map<String, LoggerLevelsDescriptor> getLoggers(Collection<LoggerConfiguration> configurations) {
-		Map<String, LoggerLevelsDescriptor> loggers = new LinkedHashMap<>(configurations.size());
+		Map<String, LoggerLevelsDescriptor> loggers = CollectionUtils.newLinkedHashMap(configurations.size());
 		for (LoggerConfiguration configuration : configurations) {
 			loggers.put(configuration.getName(), new SingleLoggerLevelsDescriptor(configuration));
 		}

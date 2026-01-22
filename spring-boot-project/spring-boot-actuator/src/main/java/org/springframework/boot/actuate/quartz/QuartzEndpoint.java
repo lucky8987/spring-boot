@@ -55,6 +55,7 @@ import org.springframework.boot.actuate.endpoint.SanitizingFunction;
 import org.springframework.boot.actuate.endpoint.annotation.Endpoint;
 import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 
 /**
  * {@link Endpoint} to expose Quartz Scheduler jobs and triggers.
@@ -141,7 +142,7 @@ public class QuartzEndpoint {
 		if (jobs.isEmpty() && !this.scheduler.getJobGroupNames().contains(group)) {
 			return null;
 		}
-		Map<String, QuartzJobSummaryDescriptor> result = new LinkedHashMap<>();
+		Map<String, QuartzJobSummaryDescriptor> result = CollectionUtils.newLinkedHashMap(jobs.size());
 		for (JobDetail job : jobs) {
 			result.put(job.getKey().getName(), QuartzJobSummaryDescriptor.of(job));
 		}

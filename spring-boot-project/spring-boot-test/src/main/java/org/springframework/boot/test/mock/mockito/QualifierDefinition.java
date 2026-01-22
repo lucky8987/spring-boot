@@ -19,7 +19,6 @@ package org.springframework.boot.test.mock.mockito;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
-import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -27,6 +26,7 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.DependencyDescriptor;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.core.annotation.MergedAnnotations;
+import org.springframework.util.CollectionUtils;
 
 /**
  * Definition of a Spring {@link Qualifier @Qualifier}.
@@ -93,7 +93,7 @@ class QualifierDefinition {
 	private static Set<Annotation> getQualifierAnnotations(Field field) {
 		// Assume that any annotations other than @MockBean/@SpyBean are qualifiers
 		Annotation[] candidates = field.getDeclaredAnnotations();
-		Set<Annotation> annotations = new HashSet<>(candidates.length);
+		Set<Annotation> annotations = CollectionUtils.newHashSet(candidates.length);
 		for (Annotation candidate : candidates) {
 			if (!isMockOrSpyAnnotation(candidate.annotationType())) {
 				annotations.add(candidate);
